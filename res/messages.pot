@@ -1878,6 +1878,10 @@ msgstr ""
 msgid "New group extruding active sketch"
 msgstr ""
 
+#: toolbar.cpp:69
+msgid "New group frustum active sketch"
+msgstr ""
+
 #: toolbar.cpp:70
 msgid "New group rotating active sketch"
 msgstr ""

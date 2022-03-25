@@ -221,7 +221,7 @@ void Group::GenerateShellAndMesh() {
     // Don't attempt a lathe or extrusion unless the source section is good:
     // planar and not self-intersecting.
     bool haveSrc = true;
-    if(type == Type::EXTRUDE || type == Type::LATHE || type == Type::REVOLVE) {
+    if(type == Type::EXTRUDE || type == Type::FRUSTUM || type == Type::LATHE || type == Type::REVOLVE) {
         Group *src = SK.GetGroup(opA);
         if(src->polyError.how != PolyError::GOOD) {
             haveSrc = false;
@@ -243,9 +243,10 @@ void Group::GenerateShellAndMesh() {
                 GenerateForStepAndRepeat<SMesh> (&prevm, &thisMesh, srcg->meshCombine);
             }
         }
-    } else if(type == Type::EXTRUDE && haveSrc) {
+    } else if((type == Type::EXTRUDE || type == Type::FRUSTUM) && haveSrc) {
         Group *src = SK.GetGroup(opA);
         Vector translate = Vector::From(h.param(0), h.param(1), h.param(2));
+        Vector origin = Vector::From(0, 0, 0);
 
         Vector tbot, ttop;
         if(subtype == Subtype::ONE_SIDED) {
@@ -253,14 +254,24 @@ void Group::GenerateShellAndMesh() {
         } else {
             tbot = translate.ScaledBy(-1); ttop = translate.ScaledBy(1);
         }
-
+        double scale = 0.0;
+        if (type == Type::FRUSTUM) {
+            ttop = translate;
+            //origin = SK.GetEntity(predef.origin)->PointGetNum();
+            origin = Vector::From(h.param(4), h.param(5), h.param(6));
+            scale = SK.GetParam(h.param(3))->val;
+        }
         SBezierLoopSetSet *sblss = &(src->bezierLoops);
         SBezierLoopSet *sbls;
         for(sbls = sblss->l.First(); sbls; sbls = sblss->l.NextAfter(sbls)) {
             int is = thisShell.surface.n;
             // Extrude this outer contour (plus its inner contours, if present)
-            thisShell.MakeFromExtrusionOf(sbls, tbot, ttop, color);
-
+            if (type == Type::EXTRUDE) {
+                thisShell.MakeFromExtrusionOf(sbls, tbot, ttop, color);
+            } else {
+                // Type::FRUSTUM
+                thisShell.MakeFrustumOf(sbls, tbot, ttop, origin, 1.0, scale, color);
+            }
             // And for any plane faces, annotate the model with the entity for
             // that face, so that the user can select them with the mouse.
             Vector onOrig = sbls->point;

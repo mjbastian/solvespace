@@ -131,6 +131,7 @@ enum class Command : uint32_t {
     GROUP_3D,
     GROUP_WRKPL,
     GROUP_EXTRUDE,
+    GROUP_FRUSTUM,
     GROUP_HELIX,
     GROUP_LATHE,
     GROUP_REVOLVE,

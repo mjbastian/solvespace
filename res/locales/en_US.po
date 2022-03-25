@@ -911,6 +911,10 @@ msgid "E&xtrude"
 msgstr "E&xtrude"
 
 #: graphicswin.cpp:117
+msgid "F&rustum"
+msgstr "F&rustum"
+
+#: graphicswin.cpp:117
 msgid "&Helix"
 msgstr "&Helix"
 
@@ -1304,6 +1308,19 @@ msgstr ""
 msgctxt "group-name"
 msgid "extrude"
 msgstr "extrude"
+
+#: group.cpp:180
+msgid ""
+"Activate a workplane (Sketch -> In Workplane) before frustum. The sketch "
+"will be extruded normal to the workplane."
+msgstr ""
+"Activate a workplane (Sketch -> In Workplane) before frustum. The sketch "
+"will be extruded normal to the workplane."
+
+#: group.cpp:190
+msgctxt "group-name"
+msgid "frustum"
+msgstr "frustum"
 
 #: group.cpp:180
 msgid "Lathe operation can only be applied to planar sketches."
@@ -2162,6 +2179,10 @@ msgstr "Toggle reference dimension"
 #: toolbar.cpp:68
 msgid "New group extruding active sketch"
 msgstr "New group extruding active sketch"
+
+#: toolbar.cpp:68
+msgid "New group frustum active sketch"
+msgstr "New group frustum active sketch"
 
 #: toolbar.cpp:70
 msgid "New group rotating active sketch"

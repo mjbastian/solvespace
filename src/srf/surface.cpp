@@ -24,6 +24,24 @@ SSurface SSurface::FromExtrusionOf(SBezier *sb, Vector t0, Vector t1) {
     return ret;
 }
 
+SSurface SSurface::FromTaperedExtrusionOf(SBezier *sb, Vector t0, Vector t1, Vector origin, double s0, double s1) {
+    SSurface ret = {};
+
+    ret.degm = sb->deg;
+    ret.degn = 1;
+
+    int i;
+    for(i = 0; i <= ret.degm; i++) {
+        ret.ctrl[i][0] = (sb->ctrl[i]).Minus(origin).ScaledBy(s0).Plus(origin).Plus(t0);
+        ret.weight[i][0] = sb->weight[i];
+
+        ret.ctrl[i][1] = (sb->ctrl[i]).Minus(origin).ScaledBy(s1).Plus(origin).Plus(t1);
+        ret.weight[i][1] = sb->weight[i];
+    }
+
+    return ret;
+}
+
 bool SSurface::IsExtrusion(SBezier *of, Vector *alongp) const {
     int i;
 

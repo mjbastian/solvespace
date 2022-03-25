@@ -361,11 +361,13 @@ void TextWindow::ShowGroupInfo() {
 
     if(g->type == Group::Type::LATHE) {
         Printf(true, " %Ftlathe plane sketch");
-    } else if(g->type == Group::Type::EXTRUDE || g->type == Group::Type::ROTATE ||
-              g->type == Group::Type::TRANSLATE || g->type == Group::Type::REVOLVE ||
-              g->type == Group::Type::HELIX) {
+    } else if(g->type == Group::Type::EXTRUDE || g->type == Group::Type::FRUSTUM ||
+              g->type == Group::Type::ROTATE || g->type == Group::Type::TRANSLATE || 
+              g->type == Group::Type::REVOLVE || g->type == Group::Type::HELIX) {
         if(g->type == Group::Type::EXTRUDE) {
             s = "extrude plane sketch";
+        } else if(g->type == Group::Type::FRUSTUM) {
+            s = "frustum plane sketch";
         } else if(g->type == Group::Type::TRANSLATE) {
             s = "translate original sketch";
         } else if(g->type == Group::Type::HELIX) {
@@ -444,9 +446,9 @@ void TextWindow::ShowGroupInfo() {
         Printf(false, ""); // blank line    
     }
 
-    if(g->type == Group::Type::EXTRUDE || g->type == Group::Type::LATHE ||
-       g->type == Group::Type::REVOLVE || g->type == Group::Type::LINKED ||
-       g->type == Group::Type::HELIX) {
+    if(g->type == Group::Type::EXTRUDE || g->type == Group::Type::FRUSTUM ||
+       g->type == Group::Type::LATHE   || g->type == Group::Type::REVOLVE || 
+       g->type == Group::Type::LINKED  || g->type == Group::Type::HELIX) {
         bool un   = (g->meshCombine == Group::CombineAs::UNION);
         bool diff = (g->meshCombine == Group::CombineAs::DIFFERENCE);
         bool intr = (g->meshCombine == Group::CombineAs::INTERSECTION);
@@ -470,8 +472,9 @@ void TextWindow::ShowGroupInfo() {
             Group::CombineAs::INTERSECTION,
             intr ? RADIO_TRUE : RADIO_FALSE);
 
-        if(g->type == Group::Type::EXTRUDE || g->type == Group::Type::LATHE ||
-           g->type == Group::Type::REVOLVE || g->type == Group::Type::HELIX) {
+        if(g->type == Group::Type::EXTRUDE || g->type == Group::Type::FRUSTUM || 
+           g->type == Group::Type::LATHE   || g->type == Group::Type::REVOLVE || 
+           g->type == Group::Type::HELIX) {
             Printf(false,
                 "%Bd   %Ftcolor   %E%Bz  %Bd (%@, %@, %@) %f%D%Lf%Fl[change]%E",
                 &g->color,
@@ -482,9 +485,9 @@ void TextWindow::ShowGroupInfo() {
                 &TextWindow::ScreenOpacity);
         }
 
-        if(g->type == Group::Type::EXTRUDE || g->type == Group::Type::LATHE ||
-           g->type == Group::Type::REVOLVE || g->type == Group::Type::LINKED ||
-           g->type == Group::Type::HELIX) {
+        if(g->type == Group::Type::EXTRUDE || g->type == Group::Type::FRUSTUM ||
+           g->type == Group::Type::LATHE   || g->type == Group::Type::REVOLVE || 
+           g->type == Group::Type::LINKED  || g->type == Group::Type::HELIX) {
             Printf(false, "   %Fd%f%LP%s  suppress this group's solid model",
                 &TextWindow::ScreenChangeGroupOption,
                 g->suppress ? CHECK_TRUE : CHECK_FALSE);

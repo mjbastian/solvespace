@@ -66,6 +66,8 @@ static ToolIcon Toolbar[] = {
 
     { "extrude",         Command::GROUP_EXTRUDE,
       N_("New group extruding active sketch"),                {} },
+    { "frustum",         Command::GROUP_FRUSTUM,
+      N_("New group frustum active sketch"),                  {} },
     { "lathe",           Command::GROUP_LATHE,
       N_("New group rotating active sketch"),                 {} },
     { "helix",           Command::GROUP_HELIX,

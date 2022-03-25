@@ -152,6 +152,7 @@ public:
         N_ROT_AA,
         N_ROT_TRANS,
         N_ROT_AXIS_TRANS,
+        SCALE_TRANS,
     };
 
     enum class Type : uint32_t {
@@ -161,6 +162,7 @@ public:
         LATHE                         = 5101,
         REVOLVE                       = 5102,
         HELIX                         = 5103,
+        FRUSTUM                       = 5110,
         ROTATE                        = 5200,
         TRANSLATE                     = 5201,
         LINKED                        = 5300
@@ -402,6 +404,7 @@ public:
         POINT_N_COPY           =  2012,
         POINT_N_ROT_AA         =  2013,
         POINT_N_ROT_AXIS_TRANS =  2014,
+        POINT_SCALE_TRANS      =  2015,
 
         NORMAL_IN_3D           =  3000,
         NORMAL_IN_2D           =  3001,

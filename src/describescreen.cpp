@@ -86,6 +86,7 @@ void TextWindow::DescribeSelection() {
             case Entity::Type::POINT_IN_3D:
             case Entity::Type::POINT_IN_2D:
             case Entity::Type::POINT_N_TRANS:
+            case Entity::Type::POINT_SCALE_TRANS:
             case Entity::Type::POINT_N_ROT_TRANS:
             case Entity::Type::POINT_N_COPY:
             case Entity::Type::POINT_N_ROT_AA:
