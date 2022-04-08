@@ -557,7 +557,7 @@ void Group::Generate(IdList<Entity,hEntity> *entity,
                 AddParam(param, h.param(2), gn.z);
 
                 // The free parameter for relative size
-                AddParam(param, h.param(3), 0.5);
+                AddParam(param, h.param(3), 1.0); // 0.5
 
                 AddParam(param, h.param(4), center.x);
                 AddParam(param, h.param(5), center.y);
@@ -568,6 +568,7 @@ void Group::Generate(IdList<Entity,hEntity> *entity,
                 // Get some arbitrary point in the sketch, that will be used
                 // as a reference when defining top and bottom faces.
                 hEntity pt = { 0 };
+                hEntity he;
                 for(i = 0; i < entity->n; i++) {
                         Entity *e = &(entity->Get(i));
                         if(e->group.v != opA.v) continue;
@@ -575,7 +576,7 @@ void Group::Generate(IdList<Entity,hEntity> *entity,
                         if(e->IsPoint()) pt = e->h;
 
                         e->CalculateNumerical(/*forExport=*/false);
-                        hEntity he = e->h; e = NULL;
+                        he = e->h; e = NULL;
                         // As soon as I call CopyEntity, e may become invalid! That
                         // adds entities, which may cause a realloc.
                         CopyEntity(entity, SK.GetEntity(he), ai, REMAP_BOTTOM,
@@ -590,7 +591,7 @@ void Group::Generate(IdList<Entity,hEntity> *entity,
                 }
                 // Remapped versions of that arbitrary point will be used to
                 // provide points on the plane faces.
-                MakeExtrusionTopBottomFaces(entity, pt);
+                MakeExtrusionTopBottomFaces(entity, he); // last value of he instead of pt
                 return;
         }
 
@@ -1110,6 +1111,7 @@ void Group::MakeExtrusionTopBottomFaces(IdList<Entity,hEntity> *el, hEntity pt)
     en.h = Remap(Entity::NO_ENTITY, REMAP_TOP);
     el->Add(&en);
 
+	// todo: scale extrusion in case of frustum
     en.point[0] = Remap(pt, REMAP_BOTTOM);
     en.h = Remap(Entity::NO_ENTITY, REMAP_BOTTOM);
     el->Add(&en);
