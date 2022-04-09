@@ -36,6 +36,10 @@ msgstr ""
 msgid "Scale cannot be zero."
 msgstr ""
 
+#: textscreens.cpp:889
+msgid "Relative size cannot be negative."
+msgstr ""
+
 #: clipboard.cpp:431
 msgid "Select one point to define origin of rotation."
 msgstr ""

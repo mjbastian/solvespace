@@ -302,6 +302,7 @@ public:
         GROUP_SCALE           = 3,
         GROUP_COLOR           = 4,
         GROUP_OPACITY         = 5,
+        GROUP_RELATIVE_SIZE   = 6,
         // For the configuration screen
         LIGHT_DIRECTION       = 100,
         LIGHT_INTENSITY       = 101,
@@ -481,6 +482,7 @@ public:
     static void ScreenChangeExprA(int link, uint32_t v);
     static void ScreenChangeGroupName(int link, uint32_t v);
     static void ScreenChangeGroupScale(int link, uint32_t v);
+    static void ScreenChangeRelativeSize(int link, uint32_t v);
     static void ScreenChangeHelixPitch(int link, uint32_t v);
     static void ScreenChangePitchOption(int link, uint32_t v);
     static void ScreenChangeLightDirection(int link, uint32_t v);

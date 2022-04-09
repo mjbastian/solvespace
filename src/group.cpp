@@ -568,7 +568,7 @@ void Group::Generate(IdList<Entity,hEntity> *entity,
                 // Get some arbitrary point in the sketch, that will be used
                 // as a reference when defining top and bottom faces.
                 hEntity pt = { 0 };
-                hEntity he;
+                hEntity he = { 0 };
                 for(i = 0; i < entity->n; i++) {
                         Entity *e = &(entity->Get(i));
                         if(e->group.v != opA.v) continue;

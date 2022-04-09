@@ -308,6 +308,13 @@ void TextWindow::ScreenChangeGroupScale(int link, uint32_t v) {
     SS.TW.edit.meaning = Edit::GROUP_SCALE;
     SS.TW.edit.group.v = v;
 }
+void TextWindow::ScreenChangeRelativeSize(int link, uint32_t v) {
+    Group *g = SK.GetGroup(SS.TW.shown.group);
+
+    SS.TW.ShowEditControl(13, ssprintf("%.3f", SK.GetParam(g->h.param(3))->val));
+    SS.TW.edit.meaning = Edit::GROUP_RELATIVE_SIZE;
+    SS.TW.edit.group.v = v;
+}
 void TextWindow::ScreenChangeHelixPitch(int link, uint32_t v) {
     Group *g = SK.GetGroup(SS.TW.shown.group);
     double pitch = g->valB/SS.MmPerUnit();
@@ -387,6 +394,14 @@ void TextWindow::ShowGroupInfo() {
             one ? RADIO_TRUE : RADIO_FALSE,
             &TextWindow::ScreenChangeGroupOption,
             !one ? RADIO_TRUE : RADIO_FALSE);
+        if (g->type == Group::Type::FRUSTUM) {
+                Printf(false, "%Bd   %Ftrelative size%E %# %Fl%Ll%f%D[change]%E",
+                        SK.GetParam(g->h.param(3))->val,
+                        &TextWindow::ScreenChangeRelativeSize, g->h.v);
+                Printf(false, "%Bd   %Ftscaled by%E %# %Fl%Ll%f%D[change]%E",
+                        g->scale,
+                        &TextWindow::ScreenChangeGroupScale, g->h.v);
+        }
 
         if(g->type == Group::Type::ROTATE || g->type == Group::Type::TRANSLATE) {
             if(g->subtype == Group::Subtype::ONE_SIDED) {
@@ -837,6 +852,19 @@ void TextWindow::EditControlDone(std::string s) {
                 } else {
                     Group *g = SK.GetGroup(edit.group);
                     g->scale = ev;
+                    SS.MarkGroupDirty(g->h);
+                }
+            }
+            break;
+
+        case Edit::GROUP_RELATIVE_SIZE:
+            if(Expr *e = Expr::From(s, /*popUpError=*/true)) {
+                double ev = e->Eval();
+                if (ev < .0f) {
+                    Error(_("Relative size cannot be negative."));
+                } else {
+                    Group *g = SK.GetGroup(edit.group);
+                    SK.GetParam(g->h.param(3))->val = ev;
                     SS.MarkGroupDirty(g->h);
                 }
             }
